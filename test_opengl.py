@@ -10,68 +10,29 @@ from OpenGL.GLUT import *
 import sys
 
 
-"""
-# === Initial Processing ===
-def init():
-	glClearColor(0.0, 0.0, 1.0, 1.0)
-
-	# setting of coordinate system\
+def initFun():
+	glClearColor(1.0,1.0,1.0,0.0)
+	glColor3f(0.0,0.0, 0.0)
+	glPointSize(4.0)
 	glMatrixMode(GL_PROJECTION)
 	glLoadIdentity()
-	gluOrtho2D(-1.0, 1.0, -1.0, 1.0)
+	gluOrtho2D(0.0,640.0,0.0,480.0)
+	
 
-
-# === Display Processing ===
-def display():
+def displayFun():
 	glClear(GL_COLOR_BUFFER_BIT)
-
-	glColor3f(1.0, 0.0, 0.0)
-	glBegin(GL_QUADS)
-	glVertex2f(-0.5, -0.5)
-	glVertex2f(-0.5,  0.5)
-	glVertex2f( 0.5,  0.5)
-	glVertex2f( 0.5, -0.5)
+	glBegin(GL_POINTS)
+	glVertex2i(100,50)
+	glVertex2i(100,130)
+	glVertex2i(150,130)
 	glEnd()
-
 	glFlush()
 
-
-# === MAIN ===
-def main():
-	# init
-	glutInit(sys.argv)
-	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE)
-	glutInitWindowSize(300, 300)
-	glutInitWindowPosition(100, 100)
-	glutCreateWindow("")
-	glutDisplayFunc(display)
-	init()
-
-	# loop
+if __name__ == '__main__':
+	glutInit()
+	glutInitWindowSize(640,480)
+	glutCreateWindow("Drawdots")
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB)
+	glutDisplayFunc(displayFun)
+	initFun()
 	glutMainLoop()
-
-
-if __name__ == "__main__":
-	main()
-"""
-
-def main():
-    glutInit(sys.argv)
-    glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE)
-    glutInitWindowSize(300, 300)  # ウィンドウサイズ
-    glutInitWindowPosition(100, 100)  # ウィンドウ位置
-    glutCreateWindow("OpenGLウィンドウの表示")  # ウィンドウを表示
-    glutDisplayFunc(display)  # 描画関数を登録
-    init()
-    glutMainLoop()
-
-def init():
-    glClearColor(0.0, 0.0, 1.0, 1.0)  # クリア色の指定
-
-def display():
-    """描画処理"""
-    glClear(GL_COLOR_BUFFER_BIT)  # 画面のクリア
-    glFlush()  # OpenGLコマンドの強制実行
-
-if __name__ == "__main__":
-    main()
