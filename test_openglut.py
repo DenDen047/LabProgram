@@ -10,7 +10,8 @@ import sys
 WIDTH = 600
 HEIGHT = 600
 
-angle = 0.0
+angleObjects = 0.0
+angleCamera = 0.0
 
 
 # === INIT ===
@@ -24,6 +25,24 @@ def init(width, height):
 	gluPerspective(45.0, float(width)/float(height), 0.1, 100.0)  # 投影変換
 
 
+# === Draw Line ===
+class Line(object):
+	"""docstring for Line"""
+	def __init__(self):
+		self.coordinateA = (0.0, 0.0, 0.0)
+		self.coordinateB = (1.0, 1.0, 1.0)
+		self.color = (1.0, 1.0, 1.0)
+		self.width = 1.0
+	def drawObj(self):
+		glColor3fv(self.color)
+		glLineWidth(self.width)
+		glBegin(GL_LINE_STRIP)
+		glVertex3fv(self.coordinateA)
+		glVertex3fv(self.coordinateB)
+		glEnd()
+
+
+
 
 # === View Screen ===
 def display():
@@ -31,19 +50,47 @@ def display():
 
 	glMatrixMode(GL_MODELVIEW)
 	glLoadIdentity()
+
+	# --- setting camera point ---
 	# 視野変換：カメラの位置と方向のセット
-	gluLookAt(5.0,4.0,1.0, 0.0,0.0,0.0, 0.0,0.0,1.0)	# camera coordinates, camera angle, camera top
+	gluLookAt(8.0,8.0,3.0, 0.0,0.0,0.0, 0.0,0.0,1.0)	# camera coordinates, camera angle, camera top
+
+	# rotation camera angle
+	glRotatef(angleCamera, 0.0, 0.0, 1.0)
+
+	# --- draw lines ---
+	lines = Line()
+	# X
+	lines.width = 3.0
+	lines.color = (1.0, 0.0, 0.0)
+	lines.coordinateB = (10.0, 0.0, 0.0)
+	lines.drawObj()
+	# Y
+	lines.width = 3.0
+	lines.color = (0.0, 1.0, 0.0)
+	lines.coordinateB = (0.0, 10.0, 0.0)
+	lines.drawObj()
+	# Z
+	lines.width = 3.0
+	lines.color = (0.0, 0.0, 1.0)
+	lines.coordinateB = (0.0, 0.0, 10.0)
+	lines.drawObj()
 	
-	# draw objects
-	glRotatef(angle, 0.0, 0.0, 1.0)	# rotation
+	# --- draw objects ---
+	glLineWidth(1.0)
+	# sphere A
+	glPushMatrix()
+	glRotatef(angleObjects, 0.0, 0.0, 1.0)	# rotation
 	glColor3f(1.0, 0.0, 0.0)	# (rad, green, blue)   0.0~1.0
 	glutWireSphere(1.0, 30, 30)	# (radius, partitions of mdridian, parallel)
-
+	glPopMatrix()
+	# sphere B
+	glPushMatrix()
 	glTranslatef(2.5, 0.0, 0.0)
-	glRotatef(angle, 0.0, 0.0, 1.0)
+	glRotatef(angleObjects, 0.0, 0.0, 1.0)
 	glColor3f(0.0, 1.0, 0.0)
 	glutWireSphere(1.0, 30, 30)
-	
+	glPopMatrix()
 
 	glFlush()  # OpenGLコマンドの強制実行
 
@@ -61,8 +108,10 @@ def reshape(width, height):
 # === IDLE ===
 def idle():
 	"""アイドル時に呼ばれるコールバック関数"""
-	global angle
-	angle += 0.05
+	global angleObjects
+	global angleCamera
+	angleObjects += 0.05
+	angleCamera += 0.03
 	glutPostRedisplay()	# redisplay
 
 
