@@ -22,40 +22,41 @@ def init():
 
 
 # === draw object ===
-verticies = (
-	(1, -1, -1),
-	(1, 1, -1),
-	(-1, 1, -1),
-	(-1, -1, -1),
-	(1, -1, 1),
-	(1, 1, 1),
-	(-1, -1, 1),
-	(-1, 1, 1)
-	)
-
-edges = (
-	(0,1),
-	(0,3),
-	(0,4),
-	(2,1),
-	(2,3),
-	(2,7),
-	(6,3),
-	(6,4),
-	(6,7),
-	(5,1),
-	(5,4),
-	(5,7)
-	)
-
-
-def Cube():
-	glBegin(GL_LINES)
-	for edge in edges:
-		for vertex in edge:
-			glVertex3fv(verticies[vertex])
-	glEnd()
-
+class Cube(object):
+	"""docstring for ViewCube"""
+	def __init__(self, name):
+		self.name = name
+		self.verticies = (
+						( 1, -1, -1),
+						( 1,  1, -1),
+						(-1,  1, -1),
+						(-1, -1, -1),
+						( 1, -1,  1),
+						( 1,  1,  1),
+						(-1, -1,  1),
+						(-1,  1,  1)
+						)
+		self.edges = (
+					(0,1),
+					(0,3),
+					(0,4),
+					(2,1),
+					(2,3),
+					(2,7),
+					(6,3),
+					(6,4),
+					(6,7),
+					(5,1),
+					(5,4),
+					(5,7)
+					)
+	
+	def viewObject(self):
+		glBegin(GL_LINES)
+		for edge in self.edges:
+			for vertex in edge:
+				glVertex3fv(self.verticies[vertex])
+		glEnd()
 
 
 
@@ -70,6 +71,9 @@ def main():
 	gluPerspective(45, (SCREEN_SIZE[0]/SCREEN_SIZE[1]), 0.1, 50.0)	# y, aspect, near, far
 	glTranslatef(0.0, 0.0, -5)	# translate (x,y,z)
 
+	# declaration
+	obj = Cube("cube")
+
 	# loop
 	while True:
 		# rotate coordinate
@@ -77,7 +81,7 @@ def main():
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
 		# draw objects
-		Cube()
+		obj.viewObject()
 
 		# view screen
 		pygame.display.flip()
