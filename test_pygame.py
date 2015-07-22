@@ -8,7 +8,6 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
-
 import sys
 
 
@@ -19,6 +18,8 @@ SCREEN_SIZE = (640, 480)
 # === Initioal Processing ===
 def init():
 	pygame.init()
+	glutInit(sys.argv)
+	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH)
 
 
 # === draw object ===
@@ -93,6 +94,10 @@ def main():
 
 		# draw objects
 		obj.viewObject()
+
+		glColor3f(0.0, 1.0, 1.0)
+		# glutWireCube(2.0)
+		# glutWireSphere(1.0, 30, 30)
 
 		# view screen
 		pygame.display.flip()
