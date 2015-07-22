@@ -7,8 +7,8 @@ import sys
 
 
 # === Global Value ===
-WIDTH = 300
-HEIGHT = 300
+WIDTH = 600
+HEIGHT = 600
 
 angle = 0.0
 
@@ -38,6 +38,12 @@ def display():
 	glRotatef(angle, 0.0, 0.0, 1.0)	# rotation
 	glColor3f(1.0, 0.0, 0.0)	# (rad, green, blue)   0.0~1.0
 	glutWireSphere(1.0, 30, 30)	# (radius, partitions of mdridian, parallel)
+
+	glTranslatef(2.5, 0.0, 0.0)
+	glRotatef(angle, 0.0, 0.0, 1.0)
+	glColor3f(0.0, 1.0, 0.0)
+	glutWireSphere(1.0, 30, 30)
+	
 
 	glFlush()  # OpenGLコマンドの強制実行
 
