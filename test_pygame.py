@@ -24,8 +24,10 @@ def init():
 # === draw object ===
 class Cube(object):
 	"""docstring for ViewCube"""
-	def __init__(self, name):
-		self.name = name
+	def __init__(self, r, g, b):
+		self.r = r
+		self.g = g
+		self.b = b
 		self.verticies = (
 						( 1, -1, -1),
 						( 1,  1, -1),
@@ -55,8 +57,18 @@ class Cube(object):
 		glBegin(GL_LINES)
 		for edge in self.edges:
 			for vertex in edge:
+				glColor3f(self.r, self.g, self.b)
 				glVertex3fv(self.verticies[vertex])
 		glEnd()
+
+class Lamp(object):
+	"""docstring for Lamp"""
+	def __init__(self, name):
+		self.name = name
+
+	def viewObject(self):
+		pass
+		
 
 
 
@@ -72,7 +84,8 @@ def main():
 	glTranslatef(0.0, 0.0, -5)	# translate (x,y,z)
 
 	# declaration
-	obj = Cube("cube")
+	obj = Cube(1.0,0.0,0.0)
+	
 
 	# loop
 	while True:
